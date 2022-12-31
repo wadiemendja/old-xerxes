@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./lib/boostrap.css">
+    <link rel="stylesheet" href="./add-request.css">
+    <script src="./lib/boostrap.js"></script>
+    <script type="module" src="./add-request.js"></script>
+    <title>Demandes</title>
+</head>
+
+<body>
+    <header id="header"></header>
+    <form id="form" class="needs-validation">
+        <h2>Créer nouvelle demande</h2>
+        <div class="mb-3">
+            <label class="form-label">Nom:</label>
+            <input class="form-control" id="nom" placeholder="Mendja">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Prenom:</label>
+            <input class="form-control" id="prenom" placeholder="Wadie" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email address:</label>
+            <input type="email" class="form-control" id="email" placeholder="wadiemendja@example.com">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Telephone:</label>
+            <input class="form-control" id="telephone" placeholder="0672328100">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Wilaya:</label>
+            <select class="form-select" id="wilaya">
+                <option value="1" selected>Adrar</option>
+                <option value="2">Chlef</option>
+                <option value="3">Laghouat</option>
+                <option value="4">Oum El Bouaghi</option>
+                <option value="5">Batna</option>
+                <option value="6">Bejaia</option>
+                <option value="7">Biskra</option>
+                <option value="8">Bechar</option>
+                <option value="9">Blida</option>
+                <option value="10">Bouira</option>
+                <option value="11">Tamanrasset</option>
+                <option value="12">Tebessa</option>
+                <option value="13">Tlemcen</option>
+                <option value="14">Tiaret</option>
+                <option value="15">Tizi Ouzou</option>
+                <option value="16">Alger</option>
+                <option value="17">Djelfa</option>
+                <option value="18">Jijel</option>
+                <option value="19">Setif</option>
+                <option value="20">Saida</option>
+                <option value="21">Skikda</option>
+                <option value="22">Sidi Bel Abbes</option>
+                <option value="23">Annaba</option>
+                <option value="24">Guelma</option>
+                <option value="25">Constantine</option>
+                <option value="26">Medea</option>
+                <option value="27">Mostaganem</option>
+                <option value="28">MSila</option>
+                <option value="29">Mascara</option>
+                <option value="30">Ouargla</option>
+                <option value="31">Oran</option>
+                <option value="32">El Bayadh</option>
+                <option value="33">Illizi</option>
+                <option value="34">Bordj Bou Arreridj</option>
+                <option value="35">Boumerdes</option>
+                <option value="36">El Tarf</option>
+                <option value="37">Tindouf</option>
+                <option value="38">Tissemsilt</option>
+                <option value="39">El Oued</option>
+                <option value="40">Khenchela</option>
+                <option value="41">Souk Ahras</option>
+                <option value="42">Tipaza</option>
+                <option value="43">Mila</option>
+                <option value="44">Ain Defla</option>
+                <option value="45">Naama</option>
+                <option value="46">Ain Temouchent</option>
+                <option value="47">Ghardaia</option>
+                <option value="48">Relizane</option>
+                <option value="49">Timimoun</option>
+                <option value="50">Bordj Badji Mokhtar</option>
+                <option value="51">Ouled Djellal</option>
+                <option value="52">Beni Abbes</option>
+                <option value="53">In Salah</option>
+                <option value="54">In Guezzam</option>
+                <option value="55">Touggourt</option>
+                <option value="56">Djanet</option>
+                <option value="57">El M'Ghair</option>
+                <option value="58">El Meniaa</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Daira:</label>
+            <input class="form-control" id="daira" placeholder="IGLI">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Commune:</label>
+            <input class="form-control" id="commune" placeholder="IGLI">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Domaine:</label>
+            <input class="form-control" id="domain" placeholder="Informatique">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Service:</label>
+            <input class="form-control" id="service" placeholder="Industriel">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Date de dépot:</label>
+            <input type="date" class="form-control" id="date_depot" placeholder="">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Durée de traitment:</label>
+            <input class="form-control" id="duree_trait" placeholder="3 jour">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description:</label>
+            <textarea class="form-control" id="description" rows="3"
+                placeholder="Write a simple description about the request..."></textarea>
+        </div>
+        <div>
+            <label class="form-label">Fichier (PDF file only):</label>
+            <input class="form-control form-control-lg" id="file" type="file" accept="application/pdf">
+        </div>
+        <iframe id="file_previewer" src="" width="100%" height="500" style="display: none;"></iframe>
+        <button type="button" id="valider" class="btn btn-outline-primary btn-lg">Valider</button>
+    </form>
+    <footer id="footer"></footer>
+</body>
+
+</html>
