@@ -34,7 +34,7 @@ function renderRequestsList() {
             <td class="service">${person.service}</td>
             <td class="date_depot">${person.date_depot}</td>
             <td class="duree_trait">${person.duree_trait}</td>
-            <td class="duree_trait">${renderStatusBox(person.statut)}</td>
+            <td class="statut" data-statut="${person.statut}">${renderStatusBox(person.statut)}</td>
         </tr>
         `;
         counter++;
@@ -61,8 +61,18 @@ function listenToPreviewClicks() {
             const date_depot = element.querySelector('.date_depot').innerText;
             const duree_trait = element.querySelector('.duree_trait').innerText;
             const description = element.dataset.description;
+            const id = element.querySelector('.id').dataset.id;
+            let statut = element.querySelector('.statut').dataset.statut;
             const fichier = element.dataset.pdf;
             previewer_container.innerHTML = `
+                <p>
+                    <strong>Modifier l'état de la demonde: </strong>
+                    <select class="form-select" aria-label="Default select example" id="statutSelecter">
+                        <option value="0" style="background:#FFCC00">En attendant</option>
+                        <option value="-1" style="background:#FF0000">Rejeté</option>
+                        <option value="1" style="background:#008000">Accepté</option>
+                    </select>
+                </p>
                 <p><strong>Nom: </strong>${nom}</p>
                 <p><strong>Prenom: </strong>${prenom}</p>
                 <p><strong>Email: </strong>${email}</p>
@@ -75,20 +85,49 @@ function listenToPreviewClicks() {
                 <p><strong>Date de dépôt: </strong>${date_depot}</p>
                 <p><strong>Durée de traitement: </strong>${duree_trait}</p>
                 <p><strong>Description: </strong>${description}</p>
-                <p><strong>Fichier: </strong>PDF file =====================></p>
                 <iframe src="${fichier}"></iframe>
             `;
+            // append buttons
+            document.querySelector('.btns').innerHTML = `
+                <button class="btn btn-outline-primary preview-btn" id="returnBtn">Retour</button>
+                <button class="btn btn-outline-danger preview-btn" id="deleteBtn">Supprimer la demande</button>
+                <button class="btn btn-outline-success preview-btn" id="saveBtn" disabled>Sauvegarder les modifications</button>
+            `;
+            const statutSelecter = document.getElementById('statutSelecter');
+            statutSelecter.value = statut;
+            statutSelecter.style.background = statutSelecter.querySelector(`[value="${statut}"]`).style.background;
+            statutSelecter.addEventListener('change', () => {
+                saveBtn.disabled = false;
+                statut = statutSelecter.value;
+                statutSelecter.style.background = statutSelecter.querySelector(`[value="${statut}"]`).style.background;
+            });
+            // change request status
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.addEventListener('click', async () => {
+                returnBtn.click();
+                await editFileStatus(statut, id);
+                alert('Statut du fichier modifié avec succès.');
+            });
+            // delete request
+            const deleteBtn = document.getElementById('deleteBtn');
+            deleteBtn.addEventListener('click', async () => {
+                if (confirm('Etes-vous sûr de vouloir supprimer cette demode ?')){
+                    returnBtn.click();
+                    await deleteRequest(id);
+                    alert('Demonde supprimé avec succès.');
+                }
+            });
+            // return from preview to home page
+            const returnBtn = document.getElementById('returnBtn');
+            returnBtn.addEventListener('click', () => { previewer.style.visibility = "hidden"; });
         });
     });
 }
 listenToPreviewClicks();
-// return from preview to home page
-const returnBtn = document.getElementById('returnBtn');
-returnBtn.addEventListener('click', () => { previewer.style.visibility = "hidden"; });
 // check for updates (refresh list on adding or deleting a request)
 const sound = new Audio('./sound/notification.webm');
 const trigerSound = document.getElementById('trigerSound');
-trigerSound.addEventListener('click', ()=> sound.play());
+trigerSound.addEventListener('click', () => sound.play());
 const rejectedCountDom = document.getElementById('rejectedCount');
 const pendingCountDom = document.getElementById('pendingCount');
 const acceptedCountDom = document.getElementById('acceptedCount');
@@ -169,4 +208,30 @@ function renderStatusBox(status) {
     if (status == 1) return `<div style="border:1px solid #000000;width:10px;height:10px;background-color:#008000;margin:0 auto"></div>`;
     else if (status == 0) return `<div style="border:1px solid #000000;width:10px;height:10px;background-color:#FFCC00;margin:0 auto"></div>`;
     else return `<div style="border:1px solid #000000;width:10px;height:10px;background-color:#FF0000;margin:0 auto"></div>`;
+}
+// edit file status
+async function editFileStatus(statut, reqId) {
+    const fetcher = await fetch('/api/edit-file-status', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ statut: statut, reqId: reqId })
+    });
+    const result = await fetcher.text();
+    return result;
+}
+// delete request
+async function deleteRequest(reqId) {
+    const fetcher = await fetch('/api/delete-request', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ reqId: reqId })
+    });
+    const result = await fetcher.text();
+    return result;
 }

@@ -67,4 +67,20 @@ async function searchFor(searchInput) {
     return results;
 }
 
-module.exports = { SQLdatabaseConnector, createDatabase, getRequests, saveRequest, getFilesStatus, searchFor };
+async function editFileStatus(statut, reqId) {
+    const promise = new Promise((resolve, reject) => {
+        con.query(`update requests set statut="${statut}" where id=${reqId}`, (err, result) => { results = result; resolve(); });
+    });
+    await promise;
+    return true;
+}
+
+async function deleteRequest(reqId) {
+    const promise = new Promise((resolve, reject) => {
+        con.query(`delete from requests where id=${reqId}`, (err, result) => { results = result; resolve(); });
+    });
+    await promise;
+    return true;
+}
+
+module.exports = { SQLdatabaseConnector, createDatabase, getRequests, saveRequest, getFilesStatus, searchFor, editFileStatus, deleteRequest };

@@ -30,11 +30,16 @@ table {
     height: 550px;
 }
 
-#returnBtn {
-    width: 30%;
-    display: block;
-    margin: 0 auto;
-    margin-top: 10px;
+.btns {
+    margin: 15px auto;
+    column-count: 3;
+    width: 90%;
+    display: flex;
+}
+
+.preview-btn {
+    width: 90%;
+    margin: 0 10px;
 }
 
 #no_elements {

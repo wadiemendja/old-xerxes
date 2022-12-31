@@ -14,8 +14,6 @@ function createWindow() {
   win.loadURL('http://localhost:' + process.env.SERVER_PORT);
 }
 // when app is ready
-setTimeout(() => {
-  app.whenReady().then(createWindow);
-}, 500);
+app.whenReady().then(createWindow);
 // on app close exit command
 app.on('window-all-closed', () => { process.exit(0); });

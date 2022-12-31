@@ -1,7 +1,11 @@
 const express = require('express');
-const { SQLdatabaseConnector, createDatabase, getRequests, saveRequest, getFilesStatus, searchFor } = require('./database/functions');
+const { SQLdatabaseConnector, createDatabase, getRequests, saveRequest, getFilesStatus, searchFor, editFileStatus, deleteRequest } = require('./database/functions');
 const path = require('path');
 require('dotenv').config();
+// connect to SQL database
+SQLdatabaseConnector();
+// create a database if !exist
+createDatabase();
 // express server setup
 const app = express();
 const PORT = process.env.SERVER_PORT;
@@ -44,7 +48,16 @@ app.post('/api/search', async (req, res) => {
         const results = await searchFor(searchInput);
         res.send(results);
 });
-// connect to SQL database
-SQLdatabaseConnector();
-// create a database if !exist
-createDatabase();
+// edit file status
+app.post('/api/edit-file-status', async (req, res) => {
+        const statut = req.body.statut;
+        const reqId = req.body.reqId;
+        const done = await editFileStatus(statut, reqId);
+        res.send(done);
+});
+// delete request
+app.post('/api/delete-request', async (req, res) => {
+        const reqId = req.body.reqId;
+        const done = await deleteRequest(reqId);
+        res.send(done);
+});
