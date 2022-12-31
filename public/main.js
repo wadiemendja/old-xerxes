@@ -107,6 +107,7 @@ function listenToPreviewClicks() {
                 returnBtn.click();
                 await editFileStatus(statut, id);
                 alert('Statut du fichier modifié avec succès.');
+                location.href = "/";
             });
             // delete request
             const deleteBtn = document.getElementById('deleteBtn');
@@ -115,6 +116,7 @@ function listenToPreviewClicks() {
                     returnBtn.click();
                     await deleteRequest(id);
                     alert('Demonde supprimé avec succès.');
+                    location.href = "/"
                 }
             });
             // return from preview to home page

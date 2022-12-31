@@ -7,4 +7,7 @@ Auto execution: C:\Windows\System32\cmd.exe /c PowerShell.exe -WindowStyle hidde
 
 Todo : 
 Home page:
- - update
+ - update (description textaria)
+create silmilaire app:
+ - disable editing description and and file status
+ - hide save and delete button
