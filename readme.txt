@@ -10,10 +10,13 @@ Infos:
     Remote connection to MySql server:
         create user 'username'@'ip' identified by 'password'; // creating user
         grant all on *.* to 'username'@'ip'; // granting privileges
-        flush privileges; // refresh
+        flush privileges; // refresh privileges
         select host, user from mysql.user; // See users
         Create a new connection on mysql workbench with same username ip and password
         Add sql port to the firewall inbound rules (wf.msc)
+        flush hosts // refresh connected hosts
+        Or just use this if you don't wanna create new user: 
+        UPDATE mysql.user SET Host='%' WHERE Host='localhost' AND User='username';
 
 Todo: 
     Home page:
