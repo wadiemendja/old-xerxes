@@ -1,7 +1,7 @@
 Requirements: 
     Node install : https://nodejs.org/en/download/
     npm install
-    MySQL install : https://dev.mysql.com/downloads/installer/
+    MySQL install (sql server & workbench only): https://dev.mysql.com/downloads/installer/
     mysql -u root -p
     mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'WM1234'
 
