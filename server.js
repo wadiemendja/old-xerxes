@@ -48,11 +48,12 @@ app.post('/api/search', async (req, res) => {
         const results = await searchFor(searchInput);
         res.send(results);
 });
-// edit file status
+// edit file status and description
 app.post('/api/edit-file-status', async (req, res) => {
         const statut = req.body.statut;
+        const description = req.body.description;
         const reqId = req.body.reqId;
-        const done = await editFileStatus(statut, reqId);
+        const done = await editFileStatus(statut, description, reqId);
         res.send(done);
 });
 // delete request

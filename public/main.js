@@ -84,7 +84,10 @@ function listenToPreviewClicks() {
                 <p><strong>Service: </strong>${service}</p>
                 <p><strong>Date de dépôt: </strong>${date_depot}</p>
                 <p><strong>Durée de traitement: </strong>${duree_trait}</p>
-                <p><strong>Description: </strong>${description}</p>
+                <p>
+                    <strong>Description: </strong>
+                    <textarea class="form-control" id="description" rows="3">${description}</textarea>
+                </p>
                 <iframe src="${fichier}"></iframe>
             `;
             // append buttons
@@ -93,6 +96,7 @@ function listenToPreviewClicks() {
                 <button class="btn btn-outline-danger preview-btn" id="deleteBtn">Supprimer la demande</button>
                 <button class="btn btn-outline-success preview-btn" id="saveBtn" disabled>Sauvegarder les modifications</button>
             `;
+            // listening to changes
             const statutSelecter = document.getElementById('statutSelecter');
             statutSelecter.value = statut;
             statutSelecter.style.background = statutSelecter.querySelector(`[value="${statut}"]`).style.background;
@@ -101,18 +105,20 @@ function listenToPreviewClicks() {
                 statut = statutSelecter.value;
                 statutSelecter.style.background = statutSelecter.querySelector(`[value="${statut}"]`).style.background;
             });
-            // change request status
+            const previewDescription = document.getElementById('description');
+            previewDescription.addEventListener('change', () => { saveBtn.disabled = false })
+            // change request status and description
             const saveBtn = document.getElementById('saveBtn');
             saveBtn.addEventListener('click', async () => {
                 returnBtn.click();
-                await editFileStatus(statut, id);
+                await editFileStatus(statut, previewDescription.value, id);
                 alert('Statut du fichier modifié avec succès.');
                 location.href = "/";
             });
             // delete request
             const deleteBtn = document.getElementById('deleteBtn');
             deleteBtn.addEventListener('click', async () => {
-                if (confirm('Etes-vous sûr de vouloir supprimer cette demode ?')){
+                if (confirm('Etes-vous sûr de vouloir supprimer cette demode ?')) {
                     returnBtn.click();
                     await deleteRequest(id);
                     alert('Demonde supprimé avec succès.');
@@ -211,15 +217,15 @@ function renderStatusBox(status) {
     else if (status == 0) return `<div style="border:1px solid #000000;width:10px;height:10px;background-color:#FFCC00;margin:0 auto"></div>`;
     else return `<div style="border:1px solid #000000;width:10px;height:10px;background-color:#FF0000;margin:0 auto"></div>`;
 }
-// edit file status
-async function editFileStatus(statut, reqId) {
+// edit file status and description
+async function editFileStatus(statut, description, reqId) {
     const fetcher = await fetch('/api/edit-file-status', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ statut: statut, reqId: reqId })
+        body: JSON.stringify({ statut: statut, description: description, reqId: reqId })
     });
     const result = await fetcher.text();
     return result;

@@ -19,8 +19,6 @@ Infos:
         UPDATE mysql.user SET Host='%' WHERE Host='localhost' AND User='username';
 
 Todo: 
-    Home page:
-        update (description textaria)
-    create silmilaire app:
+    Create silmilaire app:
         disable editing description and and file status
         hide save and delete button

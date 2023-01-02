@@ -57,7 +57,7 @@ async function getFilesStatus() {
         pendingFiles: pendingFiles[0]['count(*)']
     };
 }
-
+// search sql query
 async function searchFor(searchInput) {
     let results = undefined;
     const promise = new Promise((resolve, reject) => {
@@ -66,15 +66,15 @@ async function searchFor(searchInput) {
     await promise;
     return results;
 }
-
-async function editFileStatus(statut, reqId) {
+// editing request status and description
+async function editFileStatus(statut, description, reqId) {
     const promise = new Promise((resolve, reject) => {
-        con.query(`update requests set statut="${statut}" where id=${reqId}`, (err, result) => { results = result; resolve(); });
+        con.query(`update requests set statut="${statut}", description="${description}" where id=${reqId}`, (err, result) => { resolve(); });
     });
     await promise;
     return true;
 }
-
+// delete request sql query
 async function deleteRequest(reqId) {
     const promise = new Promise((resolve, reject) => {
         con.query(`delete from requests where id=${reqId}`, (err, result) => { results = result; resolve(); });
