@@ -67,7 +67,7 @@ function listenToPreviewClicks() {
             previewer_container.innerHTML = `
                 <p>
                     <strong>Modifier l'état de la demonde: </strong>
-                    <select class="form-select" aria-label="Default select example" id="statutSelecter">
+                    <select class="form-select" aria-label="Default select example" id="statutSelecter" disabled>
                         <option value="0" style="background:#FFCC00">En attendant</option>
                         <option value="-1" style="background:#FF0000">Rejeté</option>
                         <option value="1" style="background:#008000">Accepté</option>
@@ -86,14 +86,14 @@ function listenToPreviewClicks() {
                 <p><strong>Durée de traitement: </strong>${duree_trait}</p>
                 <p>
                     <strong>Description: </strong>
-                    <textarea class="form-control" id="description" rows="3">${description}</textarea>
+                    <textarea class="form-control" id="description" rows="3" disabled>${description}</textarea>
                 </p>
                 <iframe src="${fichier}"></iframe>
             `;
             // append buttons
             document.querySelector('.btns').innerHTML = `
                 <button class="btn btn-outline-primary preview-btn" id="returnBtn">Retour</button>
-                <button class="btn btn-outline-danger preview-btn" id="deleteBtn">Supprimer la demande</button>
+                <button class="btn btn-outline-danger preview-btn" id="deleteBtn" disabled>Supprimer la demande</button>
                 <button class="btn btn-outline-success preview-btn" id="saveBtn" disabled>Sauvegarder les modifications</button>
             `;
             // listening to changes
